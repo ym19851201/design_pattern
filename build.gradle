@@ -1,0 +1,25 @@
+// Apply the java plugin to add support for Java
+apply plugin: 'java'
+apply plugin: 'groovy'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    // The production code uses the SLF4J logging API at compile time
+    compile 'org.slf4j:slf4j-api:1.7.21'
+
+    testCompile "org.codehaus.groovy:groovy-all:2.4.1"
+    testCompile "org.hamcrest:hamcrest-core:1.3"
+    testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+}
+
+test {
+  ignoreFailures = true
+}
+
+task browse_test(type:Exec, dependsOn: 'test') {
+  executable 'open'
+  args 'build/reports/tests/index.html'
+}
