@@ -104,21 +104,9 @@ class: center, middle
 .right-column[
 ```java
 public class Farmer {
-    public void growVegetable() {
+    public Vegtable createVegetable() {
         Tomato tomato = new Tomato();
-        plant(tomato);
-        water(tomato);
-        harvest(tomato);
-    }
-
-    protected void plant(Tomato tomato) {
-        // 植える
-    }
-    protected void water(Tomato tomato) {
-        // 水やる
-    }
-    protected void harvest(Tomato tomato) {
-        // 収穫する
+        return tomato;
     }
 }
 ```
@@ -176,16 +164,6 @@ public abstract class Vegetable {
 ```java
 public abstract class Farmer {
     protected abstract Vegetable createVegetable();
-    public void growVegetable() {
-        Vegetable vegetable = createVegetable();
-        plant(vegetable);
-        water(vegetable);
-        harvest(vegetable);
-    }
-
-    protected abstract void plant(Vegetable vegetable);
-    protected abstract void water(Vegetable vegetable);
-    protected abstract void harvest(Vegetable vegetable);
 }
 ```
 ]
@@ -204,40 +182,14 @@ public abstract class Farmer {
 public class Potato extends Vegetable {
 }
 ```
-]
-
----
-.left-column[
-## Factory Methodとは？
-## Code
-]
-.right-column[
-## そして
-]
-
-.right-column[
 ```java
 public class PotatoFarmer {
     @Override
     protected Vegetable createVegetable() {
         return new Potato();
     }
-
-    @Override
-    protected abstract void plant(Vegetable vegetable) {
-        // 芋なりの植え方
-    }
-    @Override
-    protected abstract void water(Vegetable vegetable) {
-        // 芋なりの水やり
-    }
-    @Override
-    protected abstract void harvest(Vegetable vegetable) {
-        // 芋なりの収穫方法
-    }
 }
 ```
-## growVegetable()は親クラスで実装済みなので不要
 ]
 
 ---
@@ -250,7 +202,8 @@ public class PotatoFarmer {
 --
 .right-column[
 ~~ヤムチャだろうがセルだろうが、かめはめ波ユーザを実装、ユーザを作成し利用するクラスを実装すればまあどんなキャラでもかめはめ波を撃たせることができますね~~  
-芋だろうがトマトだろうが、野菜クラスをいっぱい作って、農家にそのインスタンスを生成させるメソッドを実装すれば、何農家だろうが作れますね
+芋だろうがトマトだろうが、野菜クラスをいっぱい作って、農家にそのインスタンスを生成させるメソッドを実装すれば、何農家だろうが作れますね  
+実際はオブジェクトの生成を実装から切り離すことが目的っぽい
 ]
 
 --
@@ -264,7 +217,7 @@ protected abstract Vegetable createVegetable();
 --
 .right-column[
 Factory(工場)とか宣うから、何か色々作れそうな予感がするけどこの程度です。ただのメソッドです  
-ぶっちゃけ微妙。ってかこのぐらい無意識にやってる。
+ぶっちゃけ微妙。ってかこのぐらい無意識にやりそう。
 ]
 
 ---
@@ -274,7 +227,7 @@ Factory(工場)とか宣うから、何か色々作れそうな予感がする�
 ## つまり
 ]
 .right-column[
-敢えて言うならTemplate Methodﾊﾟﾃｨｰﾝと相性がよいっていうかよく一緒に使われる
+敢えて言うならTemplate Methodﾊﾟﾃｨｰﾝと相性がよいっていうかよく一緒に使われるのかもね
 ]
 
 --
@@ -282,11 +235,23 @@ Factory(工場)とか宣うから、何か色々作れそうな予感がする�
 これね
 
 ```java
-public void growVegetable() {
+public Vegetable createVegetable() {
     Vegetable vegetable = createVegetable();
     plant(vegetable);
     water(vegetable);
     harvest(vegetable);
+
+    return vegetable;
+}
+
+protected void plant(Tomato tomato) {
+    // 植える
+}
+protected void water(Tomato tomato) {
+    // 水やる
+}
+protected void harvest(Tomato tomato) {
+    // 収穫する
 }
 ```
 ]
@@ -319,7 +284,8 @@ class: center, middle, inverse
 
 --
 .right-column[
-+ 喜べもうちょい柔軟だ
++ ~~喜べもうちょい柔軟だ~~
++ そんなこと思ってた俺フ○○ク
 ]
 
 ---
@@ -373,6 +339,7 @@ public class Alchemist {
 .right-column[
 ```java
 public abstract class AlchemyFactory {
+    // 正直Factory Method
     public abstract Material createMaterial1();
     public abstract Material createMaterial2();
 }
@@ -422,21 +389,26 @@ public class Alchemist {
 ]
 
 .right-column[
-+ Factory Methodだと1クラスにつき1個の型と、生成されるインスタンスの型が固定されていた
++ 単純に見てるレイヤーが違う
 ]
 
 --
 .right-column[
-+ Abstract Factoryではインスタンスの生成の抽象度を1つ上げた感じ
++ さっきの例でいうPotatoFarmerもHomunculusFactoryもやってることはFactory Methodによるインスタンスの生成
 ]
 
 --
 .right-column[
-+ fusion(factory)のfactory引数により、柔軟にインスタンスを生成できる  
++ Alchemistから見たら、様々なAlchemyFactoryを使って(任せて)色んなもの生成できる(Abstract)
 ]
 --
 .right-column[
-+ インスタンス生成が複雑なとき、間違いが起きないようにすることも
++ その関係性がAbstract Factory
+]
+
+--
+.right-column[
++ それを実現するのにFactory Methodが使われる(こともある)ってだけ
 ]
 
 ---
@@ -454,7 +426,7 @@ public class Alchemist {
 ---
 
 ```java
-public abstract class AlchmeyFactory {
+public abstract class AlchemyFactory {
     private static String PACKAGE_STR = "package.includes.alchemyfactories.";
 
     public static AlchemyFactory createFactory(FactoryEnum factoryEnum) {
