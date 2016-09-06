@@ -95,29 +95,50 @@ class: center, middle
 --
 
 .right-column[
-## かめはめ波撃ちたい
+## ~~かめはめ波撃ちたい~~
+## 野菜育てるゲーム
 ]
 
 --
 
 .right-column[
 ```java
-public class KamehamehaAction {
-    public void shoot() {
-        Goku goku = new Goku();
-        goku.kame();
-        goku.hame();
-        goku.ha();
+public class Farmer {
+    public void growVegetable() {
+        Tomato tomato = new Tomato();
+        plant(tomato);
+        water(tomato);
+        harvest(tomato);
+    }
+
+    protected void plant(Tomato tomato) {
+        // 植える
+    }
+    protected void water(Tomato tomato) {
+        // 水やる
+    }
+    protected void harvest(Tomato tomato) {
+        // 収穫する
     }
 }
 ```
 ]
 
---
+---
+.left-column[
+## Factory Methodとは？
+## Code
+]
+
 .right-column[
-＿人人人人人人人人人人＿  
-＞　悟空しか撃てない　＜  
-￣Y^Y^Y^Y^Y^Y^Y^Y^Y￣  
+## ~~かめはめ波撃ちたい~~
+## 野菜育てるゲーム
+]
+
+.right-column[
+＿人人人人人人人人人人人＿  
+＞　トマトしか穫れねえ　＜  
+￣Y^Y^Y^Y^Y^Y^Y^Y^Y^Y￣  
 ]
 
 ---
@@ -131,26 +152,40 @@ public class KamehamehaAction {
 
 .right-column[
 ```java
-public abstract class KamehamehaShooter {
-    abstract protected void kame();
-    abstract protected void hame();
-    abstract protected void ha();
+public abstract class Vegetable {
+    private double weight;
+    private Color color;
+    .
+    .
+    .
 }
 ```
 ]
 
---
+---
+.left-column[
+## Factory Methodとは？
+## Code
+]
+.right-column[
+## そこでまずは
+]
+
 
 .right-column[
 ```java
-public abstract class KamehamehaAction {
-    protected abstract KamehamehaShooter createShooter();
-    public void shoot() {
-        KamehamehaShooter shooter = createShooter();
-        shooter.kame();
-        shooter.hame();
-        shooter.ha();
+public abstract class Farmer {
+    protected abstract Vegetable createVegetable();
+    public void growVegetable() {
+        Vegetable vegetable = createVegetable();
+        plant(vegetable);
+        water(vegetable);
+        harvest(vegetable);
     }
+
+    protected abstract void plant(Vegetable vegetable);
+    protected abstract void water(Vegetable vegetable);
+    protected abstract void harvest(Vegetable vegetable);
 }
 ```
 ]
@@ -166,21 +201,7 @@ public abstract class KamehamehaAction {
 
 .right-column[
 ```java
-public class Yamucha extends KamehamehaShooter {
-    @Override
-    protected void kame() {
-        ｼｮﾎﾞｲ;
-    }
-
-    @Override
-    protected void hame() {
-        ﾋﾞﾐｮｳ;
-    }
-
-    @Override
-    protected void ha() {
-        ﾖﾜｲ;
-    }
+public class Potato extends Vegetable {
 }
 ```
 ]
@@ -196,14 +217,27 @@ public class Yamucha extends KamehamehaShooter {
 
 .right-column[
 ```java
-public class YamuchaKamehamehaAction {
+public class PotatoFarmer {
     @Override
-    protected KamehamehaShooter createShooter() {
-        return new Yamucha();
+    protected Vegetable createVegetable() {
+        return new Potato();
+    }
+
+    @Override
+    protected abstract void plant(Vegetable vegetable) {
+        // 芋なりの植え方
+    }
+    @Override
+    protected abstract void water(Vegetable vegetable) {
+        // 芋なりの水やり
+    }
+    @Override
+    protected abstract void harvest(Vegetable vegetable) {
+        // 芋なりの収穫方法
     }
 }
 ```
-## shoot()は親クラスで実装済みなので不要
+## growVegetable()は親クラスで実装済みなので不要
 ]
 
 ---
@@ -215,14 +249,15 @@ public class YamuchaKamehamehaAction {
 
 --
 .right-column[
-ヤムチャだろうがセルだろうが、かめはめ波ユーザを実装、ユーザを作成し利用するクラスを実装すればまあどんなキャラでもかめはめ波を撃たせることができますね
+~~ヤムチャだろうがセルだろうが、かめはめ波ユーザを実装、ユーザを作成し利用するクラスを実装すればまあどんなキャラでもかめはめ波を撃たせることができますね~~  
+芋だろうがトマトだろうが、野菜クラスをいっぱい作って、農家にそのインスタンスを生成させるメソッドを実装すれば、何農家だろうが作れますね
 ]
 
 --
 .right-column[
 こいつがインスタンスを生成するFactory **Method**
 ```java
-abstract protected KamehamehaShooter createShooter();
+protected abstract Vegetable createVegetable();
     ```
 ]
 
@@ -247,13 +282,19 @@ Factory(工場)とか宣うから、何か色々作れそうな予感がする�
 これね
 
 ```java
-public void shoot() {
-    KamehamehaShooter shooter = createShooter();
-    shooter.kame();
-    shooter.hame();
-    shooter.ha();
+public void growVegetable() {
+    Vegetable vegetable = createVegetable();
+    plant(vegetable);
+    water(vegetable);
+    harvest(vegetable);
 }
-    ```
+```
+]
+
+--
+.right-column[
+野菜を育てるという一連の処理は実装しておいて、具体的な処理は継承するクラスに任せる。  
+特に今回の場合、一連の処理の中に野菜インスタンスを生成するというFactory Methodが入っていた。
 ]
 
 ---
@@ -283,28 +324,28 @@ class: center, middle, inverse
 
 ---
 .left-column[
-## Factory Methodとは？
+## Abstract Factoryとは？
 ## Code
 ]
 
 --
 .right-column[
-## フュージョンしたい
+## ~~あなたとフュージョンしたい~~
+## ~~○○○のアトリエ~~
+## 錬金術のゲーム作るよ！
 ]
 
 --
 .right-column[
 ```java
-public class FusionAction {
-    public Zsenshi fusion() {
-        Zsenshi zsenshi1 = new Goten();
-        Zsenshi zsenshi2 = new Trunks();
+public class Alchemist {
+    public Product synthesize() {
+        Material mandoragora = new Mandragora();
+        Material mushroom = new Mushroom();
 
-        fyu(zsenshi1, zsenshi2);
-        jon(zsenshi1, zsenshi2);
-        Zsenshi gotenkusu = ha(zsenshi1, zsenshi2);
+        Product portion = nikomu(mandoragora, mushroom);
 
-        return gotenkusu;
+        return portion;
     }
 }
 ```
@@ -312,39 +353,41 @@ public class FusionAction {
 
 ---
 .left-column[
-## Factory Methodとは？
+## Abstract Factoryとは？
 ## Code
 ]
 
 .right-column[
-## これだとゴテンクスしか使えない
-## 地球の危機に際してミスター・サタンを混ぜる可能性があるのは危険
+## ~~これだとゴテンクスしか使えない~~
+## ~~地球の危機に際してミスター・サタンを混ぜる可能性があるのは危険~~
+## ポーションしか作れない
+## 色々作りたいですよね
 ]
 
 ---
 .left-column[
-## Factory Methodとは？
+## Abstract Factoryとは？
 ## Code
 ]
 
 .right-column[
 ```java
-public abstract class FusionFactory {
-    public abstract Zsenshi createZsenshi1();
-    public abstract Zsenshi createZsenshi2();
+public abstract class AlchemyFactory {
+    public abstract Material createMaterial1();
+    public abstract Material createMaterial2();
 }
 ```
 
 ```java
-public class GojitaFactory extends FusionFactory {
+public class HomunculusFactory extends AlchemyFactory {
     @Override
-    public Zsenshi createZsenshi1() {
-        return new Goku();
+    public Material createMaterial1() {
+        return new Blood();
     }
     
     @Override
-    public Zsenshi createZsenshi2() {
-        return new Bejita();
+    public Material createMaterial2() {
+        return new WaterOfLife();
     }
 }
 ```
@@ -352,22 +395,20 @@ public class GojitaFactory extends FusionFactory {
 
 ---
 .left-column[
-## Factory Methodとは？
+## Abstract Factoryとは？
 ## Code
 ]
 
 .right-column[
 ```java
-public class FusionAction {
-    public Zsenshi fusion(FusionFactory factory) {
-        Zsenshi zsenshi1 = factory.createZsenshi1();
-        Zsenshi zsenshi2 = factory.createZsenshi2();
+public class Alchemist {
+    public Product synthesize(AlchemyFactory factory) {
+        Material material1 = factory.createMaterial1();
+        Material material2 = factory.createMaterial2();
 
-        fyu(zsenshi1, zsenshi2);
-        jon(zsenshi1, zsenshi2);
-        Zsenshi fusion = ha(zsenshi1, zsenshi2);
+        Product product = nikomu(material1, material2);
 
-        return fusion;
+        return product;
     }
 }
 ```
@@ -375,7 +416,7 @@ public class FusionAction {
 
 ---
 .left-column[
-## Factory Methodとは？
+## Abstract Factoryとは？
 ## Code
 ## つまり
 ]
@@ -400,7 +441,7 @@ public class FusionAction {
 
 ---
 .left-column[
-## Factory Methodとは？
+## Abstract Factoryとは？
 ## Code
 ## つまり
 ## さらに
@@ -413,33 +454,31 @@ public class FusionAction {
 ---
 
 ```java
-public abstract class FusionFactory {
-    private static String PACKAGE_STR = "package.includes.fusionfactories.";
+public abstract class AlchmeyFactory {
+    private static String PACKAGE_STR = "package.includes.alchemyfactories.";
 
-    public static FusionFactory createFactory(FactoryEnum factoryEnum) {
+    public static AlchemyFactory createFactory(FactoryEnum factoryEnum) {
         String fqcn = PACKAGE_STR + factoryEnum.toString();
         Class clazz = Class.forName(fqcn);
 
-        return (FusionFactory) clazz.newInstance();
+        return (AlchemyFactory) clazz.newInstance();
     }
 
-    public abstract Zsenshi createZsenshi1();
-    public abstract Zsenshi createZsenshi2();
+    public abstract Material createMaterial1();
+    public abstract Material createMaterial2();
 }
 ```
 
 ```java
-public class FusionAction {
-    public Zsenshi fusion(FactoryEnum factoryEnum) {
+public class Alchemist {
+    public Product synthesize(FactoryEnum factoryEnum) {
         FusionFactory factory = FusionFactory.createFactory(factoryEnum);
-        Zsenshi zsenshi1 = factory.createZsenshi1();
-        Zsenshi zsenshi2 = factory.createZsenshi2();
+        Material material1 = factory.createMaterial1();
+        Material material2 = factory.createMaterial2();
 
-        fyu(zsenshi1, zsenshi2);
-        jon(zsenshi1, zsenshi2);
-        Zsenshi fusion = ha(zsenshi1, zsenshi2);
+        Product product = nikomu(material1, material2);
 
-        return fusion;
+        return Product;
     }
 }
 ```
