@@ -163,7 +163,7 @@ public abstract class Vegetable {
 .right-column[
 ```java
 public abstract class Farmer {
-    protected abstract Vegetable createVegetable();
+    public abstract Vegetable createVegetable();
 }
 ```
 ]
@@ -185,7 +185,7 @@ public class Potato extends Vegetable {
 ```java
 public class PotatoFarmer {
     @Override
-    protected Vegetable createVegetable() {
+    public Vegetable createVegetable() {
         return new Potato();
     }
 }
@@ -210,7 +210,7 @@ public class PotatoFarmer {
 .right-column[
 こいつがインスタンスを生成するFactory **Method**
 ```java
-protected abstract Vegetable createVegetable();
+public abstract Vegetable createVegetable();
     ```
 ]
 
@@ -244,15 +244,9 @@ public Vegetable createVegetable() {
     return vegetable;
 }
 
-protected void plant(Tomato tomato) {
-    // 植える
-}
-protected void water(Tomato tomato) {
-    // 水やる
-}
-protected void harvest(Tomato tomato) {
-    // 収穫する
-}
+protected abstract void plant(Tomato tomato);
+protected abstract void water(Tomato tomato);
+protected abstract void harvest(Tomato tomato);
 ```
 ]
 
