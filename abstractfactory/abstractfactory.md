@@ -406,7 +406,7 @@ public class Alchemist {
         Material material1 = factory.createMaterial1();
         Material material2 = factory.createMaterial2();
 
-        Product product = nikomu(material1, material2);
+        Product product = factory.synthesize(material1, material2);
 
         return product;
     }
@@ -476,7 +476,7 @@ public class Alchemist {
         Material material1 = factory.createMaterial1();
         Material material2 = factory.createMaterial2();
 
-        Product product = nikomu(material1, material2);
+        Product product = factory.synthesize(material1, material2);
 
         return Product;
     }
