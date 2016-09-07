@@ -104,7 +104,7 @@ class: center, middle
 .right-column[
 ```java
 public class Farmer {
-    public Vegtable createVegetable() {
+    public Vegetable createVegetable() {
         Tomato tomato = new Tomato();
         return tomato;
     }
@@ -127,27 +127,6 @@ public class Farmer {
 ＿人人人人人人人人人人人＿  
 ＞　トマトしか穫れねえ　＜  
 ￣Y^Y^Y^Y^Y^Y^Y^Y^Y^Y￣  
-]
-
----
-.left-column[
-## Factory Methodとは？
-## Code
-]
-.right-column[
-## そこでまずは
-]
-
-.right-column[
-```java
-public abstract class Vegetable {
-    private double weight;
-    private Color color;
-    .
-    .
-    .
-}
-```
 ]
 
 ---
@@ -244,16 +223,16 @@ public Vegetable createVegetable() {
     return vegetable;
 }
 
-protected abstract void plant(Tomato tomato);
-protected abstract void water(Tomato tomato);
-protected abstract void harvest(Tomato tomato);
+protected abstract void plant(Vegetable vegetable);
+protected abstract void water(Vegetable vegetable);
+protected abstract void harvest(Vegetable vegetable);
 ```
 ]
 
 --
 .right-column[
 野菜を育てるという一連の処理は実装しておいて、具体的な処理は継承するクラスに任せる。  
-特に今回の場合、一連の処理の中に野菜インスタンスを生成するというFactory Methodが入っていた。
+特に上記の例の場合、一連の処理の中に野菜インスタンスを生成するというFactory Methodが入っている。
 ]
 
 ---
@@ -300,10 +279,10 @@ class: center, middle, inverse
 ```java
 public class Alchemist {
     public Product synthesize() {
-        Material mandoragora = new Mandragora();
+        Material mandragora = new Mandragora();
         Material mushroom = new Mushroom();
 
-        Product portion = nikomu(mandoragora, mushroom);
+        Product portion = nikomu(mandragora, mushroom);
 
         return portion;
     }
