@@ -431,4 +431,33 @@ public class Alchemist {
 ---
 class: center, middle, inverse
 
+# ちなみに
+
+---
+
+# これすごくよさそう
+![Head First](https://i.gyazo.com/8634dde84311fdf7ba968bfb1602b76b.png)
+[Amazon](https://www.amazon.co.jp/exec/obidos/ASIN/4873112494/necojackarc-22/)
+
+---
+
+### パターンが活躍する実例から導入が始まる  
+「こんなものが作りたいんだよねー」  
+->ベタな設計  
+->要件の変更やら発生  
+->リファクタリング  
+という流れ
+
+### デザインパターンへ懐疑的な人へのメッセージ  
+ちゃんと使う意味はあるよ
+
+### 重要度が高いパターンの重点的解説  
+まあ要らんもんは要らんよね。要るものはしっかりと解説してくれてる模様
+
+### パターンは単なる道具  
+ﾃﾞｻﾞﾊﾟﾀに縛られるな。あくまで目指すのは優れた**オブジェクト指向設計者**
+
+---
+class: center, middle, inverse
+
 # 以上！
