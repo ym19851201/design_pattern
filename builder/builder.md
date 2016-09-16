@@ -456,3 +456,24 @@ class Human {
 }
 ```
 ]
+
+---
+.left-column[
+## Factory Methodとは？
+## Code
+### GoFの場合
+### Effective Javaの場合
+### Lombok Builderの場合
+]
+
+.right-column[
+```java
+HumanBuilder builder = Human.builder().name("Joseph").age(60).nationality("Japan").nationality("England");
+```
+]
+
+--
+
+.right-column[
+# もうこれで
+]
