@@ -49,3 +49,13 @@ while(true) {
 .right-column[
 ## まあこんな感じ(attackは除き)
 ]
+
+--
+.right-column[
+## ifやswitchは消えるよね
+]
+
+--
+.right-column[
+## 末尾の人が問題を処理することが多い場合、当然のように処理にかかる時間が増えていく
+]
