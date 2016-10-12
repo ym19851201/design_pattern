@@ -59,3 +59,10 @@ while(true) {
 .right-column[
 ## 末尾の人が問題を処理することが多い場合、当然のように処理にかかる時間が増えていく
 ]
+
+---
+class: center, middle, inverse
+
+# [以上!](../command)
+
+## 具体的なコードはいいよね。。。
